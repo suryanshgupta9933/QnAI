@@ -9,7 +9,7 @@ from connection import db
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def create_post(org_id, dept_id, user_id, post_id, title, content, tags, is_official_answer=False):
+def create_post(org_id: str, dept_id: str, user_id: str, post_id: str, title: str, content: str, tags: list, is_official_answer: bool = False):
     """
     Create a post by a user within a department.
     """
@@ -22,9 +22,13 @@ def create_post(org_id, dept_id, user_id, post_id, title, content, tags, is_offi
             "created_at": datetime.now(),
             "is_official_answer": is_official_answer,
             "upvotes": 0,
-            "downvotes": 0
+            "downvotes": 0,
+            "flagged": False
         })
         logger.info(f"Post {post_id} created successfully by User {user_id}.")
+
+        # AI Moderation and Analysis here
+        
     except Exception as e:
         logger.error(f"Failed to create post {post_id} by User {user_id}: {e}")
 
