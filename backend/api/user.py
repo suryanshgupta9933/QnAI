@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Create User
-@router.post("/organization/{org_id}/department/{dept_id}/user", status_code=status.HTTP_201_CREATED)
+@router.post("/user/create", status_code=status.HTTP_201_CREATED)
 def create_user_endpoint(org_id: str, dept_id: str, name: str, email: str, role: str, profile_picture_url=None):
     try:
         user_id = str(uuid.uuid4())
@@ -29,7 +29,7 @@ def create_user_endpoint(org_id: str, dept_id: str, name: str, email: str, role:
         raise HTTPException(status_code=500, detail="Failed to create user due to Internal Server Error.")
 
 # Get User
-@router.get("/organization/{org_id}/department/{dept_id}/user/{user_id}", status_code=status.HTTP_200_OK)
+@router.get("/user", status_code=status.HTTP_200_OK)
 def get_user_endpoint(org_id: str, dept_id: str, user_id: str):
     user = get_user(org_id, dept_id, user_id)
     if user:

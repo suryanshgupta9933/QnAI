@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Create Organization
-@router.post("/organization", status_code=status.HTTP_201_CREATED)
+@router.post("/organization/create", status_code=status.HTTP_201_CREATED)
 def create_organization_endpoint(name: str, description: str):
     """
     Create an organization.
@@ -27,10 +27,11 @@ def create_organization_endpoint(name: str, description: str):
             "description": description
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to create organization due to Internal Server Error. {e}")
+        print(e)
+        raise HTTPException(status_code=500, detail=f"Failed to create organization due to Internal Server Error.")
 
 # Get Organization
-@router.get("/organization/{org_id}", status_code=status.HTTP_200_OK)
+@router.get("/organization", status_code=status.HTTP_200_OK)
 def get_organization_endpoint(org_id: str):
     """
     Get an organization.
@@ -42,4 +43,5 @@ def get_organization_endpoint(org_id: str):
         else:
             raise HTTPException(status_code=404, detail=f"Organization {org_id} not found.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Organization {org_id} not found.")
+        print(e)
+        raise HTTPException(status_code=500, detail=f"Failed to get organization due to Internal Server Error.")
