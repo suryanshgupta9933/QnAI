@@ -3,28 +3,28 @@ import logging
 from datetime import datetime
 from firebase_admin import credentials, firestore
 
+from connection import db
+
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Load Firebase Credentials
-cred = credentials.Certificate("serviceAccountKey.json")
-firebase = firestore.client()
-db = firebase.client()
-
-def create_org(org_id, name, description):
+def create_organization(org_id, name, description):
     """
     Create an organization in the database.
     """
-    org_ref = db.collection("organizations").document(org_id)
-    org_ref.set({
-        "name": name,
-        "description": description,
-        "created_at": datetime.now()
-    })
-    logger.info(f"Organization {org_id} created successfully.")
+    try:
+        org_ref = db.collection("organizations").document(org_id)
+        org_ref.set({
+            "name": name,
+            "description": description,
+            "created_at": datetime.now()
+        })
+        logger.info(f"Organization {org_id} created successfully.")
+    except Exception as e:
+        logger.error(f"Failed to create organization {org_id}: {e}")
 
-def get_org(org_id):
+def get_organization(org_id):
     """
     Get an organization from the database.
     """
