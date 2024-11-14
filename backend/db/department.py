@@ -3,11 +3,13 @@ import logging
 from datetime import datetime
 from firebase_admin import firestore
 
+from connection import db
+
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def create_dept(org_id, dept_id, name):
+def create_department(org_id, dept_id, name):
     """
     Create a department in the database.
     """
@@ -21,7 +23,7 @@ def create_dept(org_id, dept_id, name):
     except Exception as e:
         logger.error(f"Failed to create department {dept_id} under Organization {org_id}: {e}")
 
-def get_dept(org_id, dept_id):
+def get_department(org_id, dept_id):
     """
     Get a department from the database.
     """

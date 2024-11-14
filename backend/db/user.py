@@ -3,6 +3,8 @@ import logging
 from datetime import datetime
 from firebase_admin import firestore
 
+from connection import db
+
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
