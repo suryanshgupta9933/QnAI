@@ -4,6 +4,7 @@ from datetime import datetime
 from firebase_admin import firestore
 
 from connection import db
+from utils.ranking import rank_responses
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -44,7 +45,8 @@ def get_responses(org_id, dept_id, user_id, post_id):
         for response in responses:
             response_list.append(response.to_dict())
         logger.info(f"Responses for Post {post_id} retrieved successfully.")
-        return response_list
+        ranked_responses = rank_responses(response_list)
+        return ranked_responses
     except Exception as e:
         print(e)
         logger.error(f"Failed to retrieve responses due to Internal Server Error")
