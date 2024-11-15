@@ -14,24 +14,25 @@ def create_user(org_id, dept_id, user_id, name, email, role, profile_picture_url
     Create a user within a department.
     """
     try:
-        user_ref = db.collection("organizations").document(org_id).collection("departments").document(dept_id).collection("users").document(user_id)
+        user_ref = db.collection("organizations").document(org_id).collection("users").document(user_id)
         user_ref.set({
             "name": name,
             "email": email,
             "role": role,
+            "department": dept_id,
             "profile_picture_url": profile_picture_url,
             "created_at": datetime.now()
         })
-        logger.info(f"User {user_id} created successfully in Department {dept_id}.")
+        logger.info(f"User {user_id} created successfully in Organization {org_id}.")
     except Exception as e:
-        logger.error(f"Failed to create user {user_id} in Department {dept_id}: {e}")
+        logger.error(f"Failed to create user {user_id} in Organization {org_id}: {e}")
 
 def get_user(org_id, dept_id, user_id):
     """
     Retrieve a user within a department.
     """
     try:
-        user_ref = db.collection("organizations").document(org_id).collection("departments").document(dept_id).collection("users").document(user_id)
+        user_ref = db.collection("organizations").document(org_id).collection("users").document(user_id)
         user = user_ref.get()
         if user.exists:
             logger.info(f"User {user_id} retrieved successfully.")

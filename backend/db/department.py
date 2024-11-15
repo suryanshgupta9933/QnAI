@@ -9,7 +9,7 @@ from connection import db
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def create_department(org_id, dept_id, name):
+def create_department(org_id, dept_id, name, description):
     """
     Create a department in the database.
     """
@@ -17,6 +17,7 @@ def create_department(org_id, dept_id, name):
         dept_ref = db.collection("organizations").document(org_id).collection("departments").document(dept_id)
         dept_ref.set({
             "name": name,
+            "description": description,
             "created_at": datetime.now()
         })
         logger.info(f"Department {dept_id} created successfully under Organization {org_id}.")

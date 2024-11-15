@@ -9,7 +9,7 @@ from connection import db
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def create_question(org_id, user_id, question_id, title, content, tags, is_official_answer):
+def create_question(org_id, user_id, question_id, title, content, tags):
     """
     Create a question by a user within organization.
     """
