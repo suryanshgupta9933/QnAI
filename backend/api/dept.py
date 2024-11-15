@@ -1,7 +1,8 @@
 # Importing Dependencies
 import uuid
 import logging
-from fastapi import APIRouter, HTTPException, status, Query, Path
+from pydantic import BaseModel
+from fastapi import APIRouter, HTTPException, status
 
 from db.department import create_department, get_department
 
@@ -11,17 +12,31 @@ logger = logging.getLogger(__name__)
 # Create API Router
 router = APIRouter()
 
+# Create Department Model
+class CreateDepartment(BaseModel):
+    org_id: str
+    name: str
+    description: str = None
+
+# Get Department Model
+class GetDepartment(BaseModel):
+    org_id: str
+    dept_id: str
+
 # Create Department
 @router.post("/department/create", status_code=status.HTTP_201_CREATED)
-def create_department_endpoint(org_id: str = Path(..., description="The unique identifier for the organization"), 
-                               name: str = Query(..., description="The name of the department to be created")):
+def create_department_endpoint(dept: CreateDepartment):
+    """
+    Create a department in an organization.
+    """
     try:
         dept_id = str(uuid.uuid4())
-        create_department(org_id, dept_id, name)
+        create_department(dept.org_id, dept_id, dept.name, dept.description)
         return {
+            "org_id": dept.org_id,
             "dept_id": dept_id,
-            "name": name,
-            "org_id": org_id
+            "name": dept.name,
+            "description": dept.description
         }
     except Exception as e:
         print(e)
@@ -29,11 +44,14 @@ def create_department_endpoint(org_id: str = Path(..., description="The unique i
 
 # Get Department
 @router.get("/department", status_code=status.HTTP_200_OK)
-def get_department_endpoint(org_id: str, dept_id: str):
+def get_department_endpoint(dept: GetDepartment):
+    """
+    Get a department in an organization.
+    """
     try:
-        department = get_department(org_id, dept_id)
-        if department:
-            return department
+        dept = get_department(dept.org_id, dept.dept_id)
+        if dept:
+            return dept
         else:
             raise HTTPException(status_code=404, detail=f"Department {dept_id} not found.")
     except Exception as e:

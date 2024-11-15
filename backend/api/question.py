@@ -19,7 +19,6 @@ class CreateQuestion(BaseModel):
     title: str
     content: str
     tags: list
-    is_official_answer: bool = False
 
 # Get Question Model
 class GetQuestion(BaseModel):
@@ -40,12 +39,11 @@ class UpdateQuestionVotes(BaseModel):
 def create_question_endpoint(question: CreateQuestion):
     try:
         question_id = str(uuid.uuid4())
-        create_question(question.org_id, question.user_id, question_id, question.title, question.content, question.tags, question.is_official_answer)
+        create_question(question.org_id, question.user_id, question_id, question.title, question.content, question.tags)
         return {
-            "question_id": question_id,
-            "title": question.title,
-            "content": question.content,
-            "tags": question.tags
+            "org_id": question.org_id,
+            "user_id": question.user_id,
+            "question_id": question_id
         }
     except Exception as e:
         print(e)
