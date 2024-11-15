@@ -22,7 +22,6 @@ def create_post_endpoint(org_id: str, dept_id: str, user_id: str, title: str, co
             "title": title,
             "content": content,
             "tags": tags,
-            "is_official_answer": is_official_answer
         }
     except Exception as e:
         print(e)
