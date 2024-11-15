@@ -4,8 +4,8 @@ from fastapi import FastAPI
 from api.org import router as organization_router
 from api.dept import router as department_router
 from api.user import router as user_router
-from api.post import router as post_router
-from api.response import router as response_router
+from api.question import router as question_router
+from api.answer import router as answer_router
 
 # Create FastAPI instance
 app = FastAPI()
@@ -14,8 +14,8 @@ app = FastAPI()
 app.include_router(organization_router)
 app.include_router(department_router, prefix="/organization")
 app.include_router(user_router, prefix="/organization")
-app.include_router(post_router, prefix="/organization/user")
-app.include_router(response_router, prefix="/organization/post")
+app.include_router(question_router, prefix="/user")
+app.include_router(answer_router, prefix="/question")
 
 # Run FastAPI Application
 if __name__ == "__main__":
