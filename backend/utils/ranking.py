@@ -6,25 +6,25 @@ def sigmoid(x):
     # Sigmoid function to scale values between 0 and 1
     return 1 / (1 + math.exp(-x))
 
-def rank_responses(responses):
+def rank_answers(answers):
     """
-    Rank responses based on upvotes, downvotes
+    Rank answers based on upvotes, downvotes
     """
-    ranked_responses = []
+    ranked_answers = []
     # Weights for different parameters
     official_answer_weight = 0.5
     author_approved_weight = 0.2
     upvote_weight = 0.25
     downvote_weight = -0.15
 
-    # Calculate score for each response    
-    for response in responses:
-        # Fetch response details
-        created_at = response.get("created_at")
-        upvotes = response.get("upvotes")
-        downvotes = response.get("downvotes")
-        author_upvote = response.get("author_upvote")
-        is_official_answer = response.get("is_official_answer")
+    # Calculate score for each answer    
+    for answer in answers:
+        # Fetch answer details
+        created_at = answer.get("created_at")
+        upvotes = answer.get("upvotes")
+        downvotes = answer.get("downvotes")
+        author_upvote = answer.get("author_upvote")
+        is_official_answer = answer.get("is_official_answer")
         
         # Calculate time difference
         # age_in_days = (datetime.now() - created_at).days + 1
@@ -42,8 +42,8 @@ def rank_responses(responses):
 
         # Apply sigmoid function to total votes
         score = sigmoid(score/5)
-        response["score"] = score
+        answer["score"] = score
 
-    # Sort responses based on score
-    ranked_responses = sorted(responses, key=lambda x: x["score"], reverse=True)
-    return ranked_responses
+    # Sort answers based on score
+    ranked_answers = sorted(answers, key=lambda x: x["score"], reverse=True)
+    return ranked_answers
