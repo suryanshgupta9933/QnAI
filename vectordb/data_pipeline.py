@@ -13,4 +13,3 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
-
