@@ -17,7 +17,7 @@ app.include_router(user_router, prefix="/organization")
 app.include_router(question_router, prefix="/user")
 app.include_router(answer_router, prefix="/question")
 
-# Run FastAPI Application
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run("routes:app", host="0.0.0.0", port=8000, reload=True, debug=True)
+# Health Check
+@app.get("/ready")
+async def ready():
+    return {"status": "Server is up and running!"}
