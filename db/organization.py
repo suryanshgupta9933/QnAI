@@ -3,11 +3,14 @@ import logging
 from datetime import datetime
 from firebase_admin import credentials, firestore
 
-from connection import db
+from connection import initialize_firebase
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+# Initialize Firebase
+db = initialize_firebase()
 
 def create_organization(org_id, name, description):
     """
