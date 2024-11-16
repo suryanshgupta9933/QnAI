@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Path to service account key
-SERVICE_ACCOUNT_KEY = os.getenv("serviceAccountKey", "serviceAccountKey.json")
+SERVICE_ACCOUNT_KEY = os.getenv("serviceAccountKey")
 
 # Initialize Firebase app
 try:
