@@ -40,21 +40,16 @@ def create_question_endpoint(question: CreateQuestion):
             "question_id": question_id
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to create question due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail="Failed to create question. {e}")
 
 # Get question
 @router.get("/question", status_code=status.HTTP_200_OK)
 def get_question_endpoint(org_id: str, user_id: str, question_id: str):
-    try:
-        question = get_question(org_id, user_id, question_id)
-        if question:
-            return question
-        else:
-            raise HTTPException(status_code=404, detail=f"question not found.")
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to get question due to Internal Server Error.")
+    question = get_question(org_id, user_id, question_id)
+    if question:
+        return question
+    else:
+        raise HTTPException(status_code=404, detail=f"Question {question_id} not found.")
 
 @router.put("/question/update_vote", status_code=status.HTTP_200_OK)
 def update_question_votes_endpoint(update: UpdateQuestionVotes):
@@ -65,5 +60,5 @@ def update_question_votes_endpoint(update: UpdateQuestionVotes):
             "upvotes_increment": update.upvotes,
             "downvotes_increment": update.downvotes
         }
-    except Exception:
-        raise HTTPException(status_code=500, detail="Failed to update question votes due to Internal Server Error.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to update question votes. {e}")

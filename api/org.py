@@ -33,8 +33,7 @@ def create_organization_endpoint(org: CreateOrganization):
             "description": org.description
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail=f"Failed to create organization due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail=f"Failed to create organization. {e}")
 
 # Get Organization
 @router.get("/organization", status_code=status.HTTP_200_OK)
@@ -42,12 +41,8 @@ def get_organization_endpoint(org_id: str):
     """
     Get an organization.
     """
-    try:
-        org = get_organization(org_id)
-        if org:
-            return org
-        else:
-            raise HTTPException(status_code=404, detail=f"Organization {org_id} not found.")
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail=f"Failed to get organization due to Internal Server Error.")
+    org = get_organization(org_id)
+    if org:
+        return org
+    else:
+        raise HTTPException(status_code=404, detail=f"Organization {org_id} not found.")

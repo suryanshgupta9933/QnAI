@@ -43,8 +43,7 @@ def create_answer_endpoint(answer: CreateAnswer):
             "answer_id": answer_id
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to create answer due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail="Failed to create answer: {e}")
 
 # Get answers
 @router.get("/answers", status_code=status.HTTP_200_OK)
@@ -52,15 +51,11 @@ def get_answers_endpoint(org_id: str, user_id: str, question_id: str):
     """
     Retrieve all answers to a question by a user.
     """
-    try:
-        answers = get_answers(org_id, user_id, question_id)
-        if answers:
-            return answers
-        else:
-            raise HTTPException(status_code=404, detail=f"Answers not found.")
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to get answers due to Internal Server Error.")
+    answers = get_answers(org_id, user_id, question_id)
+    if answers:
+        return answers
+    else:
+        raise HTTPException(status_code=404, detail=f"Answers for question {question_id} not found.")
 
 @router.put("/answer/update_vote", status_code=status.HTTP_200_OK)
 def update_answer_votes_endpoint(update: UpdateAnswerVotes):
@@ -72,5 +67,4 @@ def update_answer_votes_endpoint(update: UpdateAnswerVotes):
             "downvotes": update.downvotes
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to update answer votes due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail="Failed to update answer votes: {e}")

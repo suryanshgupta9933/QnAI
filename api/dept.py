@@ -34,8 +34,7 @@ def create_department_endpoint(dept: CreateDepartment):
             "description": dept.description
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to create department due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail="Failed to create department. {e}")
 
 # Get Department
 @router.get("/department", status_code=status.HTTP_200_OK)
@@ -43,12 +42,8 @@ def get_department_endpoint(org_id: str, dept_id: str):
     """
     Get a department in an organization.
     """
-    try:
-        dept = get_department(org_id, dept_id)
-        if dept:
-            return dept
-        else:
-            raise HTTPException(status_code=404, detail=f"Department {dept_id} not found.")
-    except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail=f"Failed to get department due to Internal Server Error.")
+    dept = get_department(org_id, dept_id)
+    if dept:
+        return dept
+    else:
+        raise HTTPException(status_code=404, detail=f"Department {dept_id} not found.")

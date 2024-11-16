@@ -32,8 +32,7 @@ def create_user_endpoint(user: CreateUser):
             "user_id": user_id
         }
     except Exception as e:
-        print(e)
-        raise HTTPException(status_code=500, detail="Failed to create user due to Internal Server Error.")
+        raise HTTPException(status_code=500, detail="Failed to create user. {e}")
 
 # Get User
 @router.get("/user", status_code=status.HTTP_200_OK)
@@ -42,4 +41,4 @@ def get_user_endpoint(org_id: str, dept_id: str, user_id: str):
     if user:
         return user
     else:
-        raise HTTPException(status_code=404, detail=f"User {user_id} not found in department {dept_id}.")
+        raise HTTPException(status_code=404, detail=f"User {user_id} not found in Organization {org_id}.")
