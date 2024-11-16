@@ -1,5 +1,6 @@
 # Importing Dependencies
 import os
+import json
 import logging
 from dotenv import load_dotenv
 import firebase_admin
@@ -14,6 +15,11 @@ load_dotenv()
 
 # Path to service account key
 SERVICE_ACCOUNT_KEY = os.getenv("serviceAccountKey")
+ENV = os.getenv("env")
+if not ENV or ENV == "prod":
+    with open(SERVICE_ACCOUNT_KEY, "r") as f:
+        SERVICE_ACCOUNT_KEY = f.read()
+    SERVICE_ACCOUNT_KEY = json.loads(SERVICE_ACCOUNT_KEY)
 
 # Initialize Firebase app
 def initialize_firebase():
