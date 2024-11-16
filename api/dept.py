@@ -18,11 +18,6 @@ class CreateDepartment(BaseModel):
     name: str
     description: str = None
 
-# Get Department Model
-class GetDepartment(BaseModel):
-    org_id: str
-    dept_id: str
-
 # Create Department
 @router.post("/department/create", status_code=status.HTTP_201_CREATED)
 def create_department_endpoint(dept: CreateDepartment):
@@ -44,12 +39,12 @@ def create_department_endpoint(dept: CreateDepartment):
 
 # Get Department
 @router.get("/department", status_code=status.HTTP_200_OK)
-def get_department_endpoint(dept: GetDepartment):
+def get_department_endpoint(org_id: str, dept_id: str):
     """
     Get a department in an organization.
     """
     try:
-        dept = get_department(dept.org_id, dept.dept_id)
+        dept = get_department(org_id, dept_id)
         if dept:
             return dept
         else:

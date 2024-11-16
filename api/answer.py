@@ -19,12 +19,6 @@ class CreateAnswer(BaseModel):
     question_id: str
     content: str
 
-# Get Answer Model
-class GetAnswer(BaseModel):
-    org_id: str
-    user_id: str
-    question_id: str
-
 # Update Answer Votes Model
 class UpdateAnswerVotes(BaseModel):
     org_id: str
@@ -54,12 +48,12 @@ def create_answer_endpoint(answer: CreateAnswer):
 
 # Get answers
 @router.get("/answers", status_code=status.HTTP_200_OK)
-def get_answers_endpoint(answer: GetAnswer):
+def get_answers_endpoint(org_id: str, user_id: str, question_id: str):
     """
     Retrieve all answers to a question by a user.
     """
     try:
-        answers = get_answers(answer.org_id, answer.user_id, answer.question_id)
+        answers = get_answers(org_id, user_id, question_id)
         if answers:
             return answers
         else:

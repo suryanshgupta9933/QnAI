@@ -20,12 +20,6 @@ class CreateQuestion(BaseModel):
     content: str
     tags: list
 
-# Get Question Model
-class GetQuestion(BaseModel):
-    org_id: str
-    user_id: str
-    question_id: str
-
 # Update Question Votes Model
 class UpdateQuestionVotes(BaseModel):
     org_id: str
@@ -51,9 +45,9 @@ def create_question_endpoint(question: CreateQuestion):
 
 # Get question
 @router.get("/question", status_code=status.HTTP_200_OK)
-def get_question_endpoint(question: GetQuestion):
+def get_question_endpoint(org_id: str, user_id: str, question_id: str):
     try:
-        question = get_question(question.org_id, question.user_id, question.question_id)
+        question = get_question(org_id, user_id, question_id)
         if question:
             return question
         else:

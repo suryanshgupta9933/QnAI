@@ -18,10 +18,6 @@ class CreateOrganization(BaseModel):
     name: str
     description: str
 
-# Get Organization Model
-class GetOrganization(BaseModel):
-    org_id: str
-
 # Create Organization
 @router.post("/organization/create", status_code=status.HTTP_201_CREATED)
 def create_organization_endpoint(org: CreateOrganization):
@@ -42,12 +38,12 @@ def create_organization_endpoint(org: CreateOrganization):
 
 # Get Organization
 @router.get("/organization", status_code=status.HTTP_200_OK)
-def get_organization_endpoint(org: GetOrganization):
+def get_organization_endpoint(org_id: str):
     """
     Get an organization.
     """
     try:
-        org = get_organization(org.org_id)
+        org = get_organization(org_id)
         if org:
             return org
         else:
