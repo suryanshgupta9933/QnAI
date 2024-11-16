@@ -15,10 +15,8 @@ load_dotenv()
 
 # Path to service account key
 SERVICE_ACCOUNT_KEY = os.getenv("serviceAccountKey")
-ENV = os.getenv("env")
+ENV = os.getenv("ENV")
 if not ENV or ENV == "prod":
-    with open(SERVICE_ACCOUNT_KEY, "r") as f:
-        SERVICE_ACCOUNT_KEY = f.read()
     SERVICE_ACCOUNT_KEY = json.loads(SERVICE_ACCOUNT_KEY)
 
 # Initialize Firebase app
