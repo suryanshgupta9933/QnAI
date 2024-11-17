@@ -17,8 +17,9 @@ def create_question(org_id, user_id, question_id, title, content, tags):
     Create a question by a user within organization.
     """
     try:
-        question_ref = db.collection("organizations").document(org_id).collection("users").document(user_id).collection("questions").document(question_id)
+        question_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id)
         question_ref.set({
+            "user_id": user_id,
             "title": title,
             "content": content,
             "tags": tags,
@@ -39,7 +40,7 @@ def get_question(org_id, user_id, question_id):
     Retrieve a question by a user.
     """
     try:
-        question_ref = db.collection("organizations").document(org_id).collection("users").document(user_id).collection("questions").document(question_id)
+        question_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id)
         question = question_ref.get()
         if question.exists:
             logger.info(f"question {question_id} retrieved successfully.")
@@ -56,7 +57,7 @@ def update_question_votes(org_id, user_id, question_id, upvotes=0, downvotes=0):
     Update the upvotes or downvotes for a question.
     """
     try:
-        question_ref = db.collection("organizations").document(org_id).collection("users").document(user_id).collection("questions").document(question_id)
+        question_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id)
         question_ref.update({
             "upvotes": firestore.Increment(upvotes),
             "downvotes": firestore.Increment(downvotes)
