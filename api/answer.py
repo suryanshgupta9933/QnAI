@@ -4,7 +4,7 @@ import logging
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException, status
 
-from db.answer import create_answer, get_answers
+from db.answer import create_answer, get_answers, update_answer_votes
 
 # Configure Logging
 logger = logging.getLogger(__name__)
@@ -67,4 +67,5 @@ def update_answer_votes_endpoint(update: UpdateAnswerVotes):
             "downvotes": update.downvotes
         }
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail="Failed to update answer votes: {e}")
