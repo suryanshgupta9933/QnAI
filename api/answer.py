@@ -23,6 +23,7 @@ class CreateAnswer(BaseModel):
 class UpdateAnswerVotes(BaseModel):
     org_id: str
     question_id: str
+    answer_id: str
     upvotes: int = 0
     downvotes: int = 0
 
@@ -59,7 +60,7 @@ def get_answers_endpoint(org_id: str, question_id: str):
 @router.put("/answer/update_vote", status_code=status.HTTP_200_OK)
 def update_answer_votes_endpoint(update: UpdateAnswerVotes):
     try:
-        update_answer_votes(update.org_id, update.question_id, update.upvotes, update.downvotes)
+        update_answer_votes(update.org_id, update.question_id, update.answer_id, update.upvotes, update.downvotes)
         return {
             "question_id": update.question_id,
             "upvotes": update.upvotes,
