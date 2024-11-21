@@ -22,7 +22,6 @@ class CreateAnswer(BaseModel):
 # Update Answer Votes Model
 class UpdateAnswerVotes(BaseModel):
     org_id: str
-    user_id: str
     question_id: str
     upvotes: int = 0
     downvotes: int = 0
@@ -47,11 +46,11 @@ def create_answer_endpoint(answer: CreateAnswer):
 
 # Get answers
 @router.get("/answers", status_code=status.HTTP_200_OK)
-def get_answers_endpoint(org_id: str, user_id: str, question_id: str):
+def get_answers_endpoint(org_id: str, question_id: str):
     """
     Retrieve all answers to a question by a user.
     """
-    answers = get_answers(org_id, user_id, question_id)
+    answers = get_answers(org_id, question_id)
     if answers:
         return answers
     else:
@@ -60,7 +59,7 @@ def get_answers_endpoint(org_id: str, user_id: str, question_id: str):
 @router.put("/answer/update_vote", status_code=status.HTTP_200_OK)
 def update_answer_votes_endpoint(update: UpdateAnswerVotes):
     try:
-        update_answer_votes(update.org_id, update.user_id, update.question_id, update.upvotes, update.downvotes)
+        update_answer_votes(update.org_id, update.question_id, update.upvotes, update.downvotes)
         return {
             "question_id": update.question_id,
             "upvotes": update.upvotes,

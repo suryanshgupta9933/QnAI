@@ -23,7 +23,6 @@ class CreateQuestion(BaseModel):
 # Update Question Votes Model
 class UpdateQuestionVotes(BaseModel):
     org_id: str
-    user_id: str
     question_id: str
     upvotes: int = 0
     downvotes: int = 0
@@ -44,8 +43,8 @@ def create_question_endpoint(question: CreateQuestion):
 
 # Get question
 @router.get("/question", status_code=status.HTTP_200_OK)
-def get_question_endpoint(org_id: str, user_id: str, question_id: str):
-    question = get_question(org_id, user_id, question_id)
+def get_question_endpoint(org_id: str, question_id: str):
+    question = get_question(org_id, question_id)
     if question:
         return question
     else:
@@ -54,7 +53,7 @@ def get_question_endpoint(org_id: str, user_id: str, question_id: str):
 @router.put("/question/update_vote", status_code=status.HTTP_200_OK)
 def update_question_votes_endpoint(update: UpdateQuestionVotes):
     try:
-        update_question_votes(update.org_id, update.user_id, update.question_id, update.upvotes, update.downvotes)
+        update_question_votes(update.org_id, update.question_id, update.upvotes, update.downvotes)
         return {
             "question_id": update.question_id,
             "upvotes_increment": update.upvotes,

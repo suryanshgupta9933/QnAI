@@ -35,7 +35,7 @@ def create_question(org_id, user_id, question_id, title, content, tags):
     except Exception as e:
         logger.error(f"Failed to create question {question_id} by User {user_id}: {e}")
 
-def get_question(org_id, user_id, question_id):
+def get_question(org_id, question_id):
     """
     Retrieve a question by a user.
     """
@@ -46,13 +46,13 @@ def get_question(org_id, user_id, question_id):
             logger.info(f"question {question_id} retrieved successfully.")
             return question.to_dict()
         else:
-            logger.error(f"question {question_id} not found.")
+            logger.error(f"Question {question_id} not found.")
             return None
     except Exception as e:
         logger.error(f"Failed to retrieve question {question_id}: {e}")
         return None
 
-def update_question_votes(org_id, user_id, question_id, upvotes=0, downvotes=0):
+def update_question_votes(org_id, question_id, upvotes=0, downvotes=0):
     """
     Update the upvotes or downvotes for a question.
     """

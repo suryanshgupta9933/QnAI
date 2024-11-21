@@ -35,7 +35,7 @@ def create_answer(org_id, user_id, question_id, answer_id, content):
     except Exception as e:
         logger.error(f"Failed to answer question due to Internal Server Error")
 
-def get_answers(org_id, user_id, question_id):
+def get_answers(org_id, question_id):
     """
     Retrieve all answers to a question by a user.
     """
@@ -52,7 +52,7 @@ def get_answers(org_id, user_id, question_id):
         logger.error(f"Failed to retrieve answers due to Internal Server Error")
         return None
 
-def update_answer_votes(org_id, user_id, question_id, answer_id, upvotes=0, downvotes=0):
+def update_answer_votes(org_id, question_id, answer_id, upvotes=0, downvotes=0):
     """
     Update the upvotes or downvotes for an answer.
     """
