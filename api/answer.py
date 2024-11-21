@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException, status
 from db.answer import create_answer, get_answers, update_answer_votes
 
 # Configure Logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Create API Router
