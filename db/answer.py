@@ -32,8 +32,28 @@ def create_answer(org_id, user_id, question_id, answer_id, content):
 
         # AI Moderation and Analysis here
 
+        # Index the answer to Pinecone
+        index_answer(org_id, user_id, question_id, answer_id, content)
+
     except Exception as e:
         logger.error(f"Failed to answer question due to Internal Server Error")
+
+def get_answer(org_id, question_id, answer_id):
+    """
+    Retrieve a specific answer to a question by a user.
+    """
+    try:
+        answer_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id).collection("answers").document(answer_id)
+        answer = answer_ref.get()
+        if answer.exists:
+            logger.info(f"Answer {answer_id} retrieved successfully.")
+            return answer.to_dict()
+        else:
+            logger.error(f"Answer {answer_id} does not exist.")
+            return None
+    except Exception as e:
+        logger.error(f"Failed to retrieve answer due to Internal Server Error")
+        return None
 
 def get_answers(org_id, question_id):
     """
