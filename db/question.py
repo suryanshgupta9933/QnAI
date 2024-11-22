@@ -31,6 +31,9 @@ def create_question(org_id, user_id, question_id, title, content, tags):
         logger.info(f"Question {question_id} created successfully by User {user_id}.")
 
         # AI Moderation and Analysis here
+
+        # Index the question to Pinecone
+        index_question(org_id, user_id, question_id, title, content, tags)
         
     except Exception as e:
         logger.error(f"Failed to create question {question_id} by User {user_id}: {e}")
