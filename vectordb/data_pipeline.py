@@ -1,7 +1,6 @@
 # Importing Dependencies
 import os
 import logging
-from dotenv import load_dotenv
 
 from .connection import connect_pinecone
 from utils.embedding import generate_embedding
@@ -10,9 +9,8 @@ from utils.embedding import generate_embedding
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-load_dotenv()
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+# Connect to Pinecone
+index = connect_pinecone()
 
 # Index Questions
 def index_question(org_id: str, user_id: str, question_id: str, title: str, body: str, tags: list):
@@ -22,10 +20,6 @@ def index_question(org_id: str, user_id: str, question_id: str, title: str, body
         question_embedding = generate_embedding(question_data)
         logger.info(f"Question {question_id} embedded successfully.")
 
-        # Connect to Pinecone
-        index = connect_pinecone()
-        namespace = "questions"
-        
         # Prepare the data
         data = {
             "id": question_id,
@@ -41,7 +35,7 @@ def index_question(org_id: str, user_id: str, question_id: str, title: str, body
         # Update the index
         index.upsert(
             vectors=[data],
-            namespace=namespace
+            namespace="questions"
         )
         logger.info(f"Question {question_id} indexed successfully.")
     except Exception as e:
@@ -55,11 +49,7 @@ def index_answer(org_id: str, user_id: str, question_id: str, answer_id: str, bo
         answer_data = body
         answer_embedding = generate_embedding(answer_data)
         logger.info(f"Answer {answer_id} embedded successfully.")
-
-        # Connect to Pinecone
-        index = connect_pinecone()
-        namespace = "answers"
-        
+    
         # Prepare the data
         data = {
             "id": answer_id,
@@ -75,7 +65,7 @@ def index_answer(org_id: str, user_id: str, question_id: str, answer_id: str, bo
         # Update the index
         index.upsert(
             vectors=[data],
-            namespace=namespace
+            namespace="answers"
         )
         logger.info(f"Answer {answer_id} indexed successfully.")
     except Exception as e:

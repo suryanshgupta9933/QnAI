@@ -17,7 +17,10 @@ PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
 def connect_pinecone():
     try:
         pinecone = Pinecone(api_key=PINECONE_API_KEY)
-        index = pinecone.Index(PINECONE_INDEX_NAME)
+        index = pinecone.Index(
+            name=PINECONE_INDEX_NAME,
+            pool_threads=50,
+        )
         logging.info(f"Connected to Pinecone Index: {PINECONE_INDEX_NAME}")
         return index        
     except Exception as e:
