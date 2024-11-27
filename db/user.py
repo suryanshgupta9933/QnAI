@@ -31,9 +31,9 @@ def create_user(org_id, dept_id, user_id, name, email, role, profile_picture_url
     except Exception as e:
         logger.error(f"Failed to create user {user_id} in Organization {org_id}: {e}")
 
-def get_user(org_id, dept_id, user_id):
+def get_user(org_id, user_id):
     """
-    Retrieve a user within a department.
+    Retrieve a user within an organization.
     """
     try:
         user_ref = db.collection("organizations").document(org_id).collection("users").document(user_id)
