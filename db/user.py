@@ -24,6 +24,7 @@ def create_user(org_id, dept_id, user_id, name, email, role, profile_picture_url
             "role": role,
             "department": dept_id,
             "profile_picture_url": profile_picture_url,
+            "official": False,
             "created_at": datetime.now()
         })
         logger.info(f"User {user_id} created successfully in Organization {org_id}.")
