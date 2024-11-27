@@ -86,4 +86,11 @@ def update_answer_votes(org_id, question_id, answer_id, upvotes=0, downvotes=0):
     except Exception as e:
         logger.error(f"Failed to update answer votes due to Internal Server Error")
         
-def mark_official(org_id, user question_id, answer_id, 
+#def mark_official(org_id, user_id, question_id, answer_id):
+#    """
+#    Mark the answer official by official role users
+#    """
+#    try:
+#        answer_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id).collection("answers").document(answer_id)
+#        answer_ref.update({
+#            "official": 
