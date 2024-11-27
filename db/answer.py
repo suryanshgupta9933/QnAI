@@ -21,12 +21,13 @@ def create_answer(org_id, user_id, question_id, answer_id, content):
         answer_ref = db.collection("organizations").document(org_id).collection("questions").document(question_id).collection("answers").document(answer_id)
         answer_ref.set({
             "content": content,
-            "created_at": datetime.now(),
+            "user_id": user_id,
             "upvotes": 0,
             "downvotes": 0,
             "author_upvote": False,
             "is_official_answer": False,
-            "flagged": False
+            "flagged": False,
+            "created_at": datetime.now()
         })
         logger.info(f"Answer {answer_id} created successfully by User {user_id} for question {question_id}.")
 
@@ -84,3 +85,5 @@ def update_answer_votes(org_id, question_id, answer_id, upvotes=0, downvotes=0):
         })
     except Exception as e:
         logger.error(f"Failed to update answer votes due to Internal Server Error")
+        
+def mark_official(org_id, user question_id, answer_id, 
