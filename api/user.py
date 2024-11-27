@@ -37,8 +37,8 @@ def create_user_endpoint(user: CreateUser):
 
 # Get User
 @router.get("/user", status_code=status.HTTP_200_OK)
-def get_user_endpoint(org_id: str, dept_id: str, user_id: str):
-    user = get_user(org_id, dept_id, user_id)
+def get_user_endpoint(org_id: str, user_id: str):
+    user = get_user(org_id, user_id)
     if user:
         return user
     else:
